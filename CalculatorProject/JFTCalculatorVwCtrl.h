@@ -10,5 +10,6 @@
 
 @interface JFTCalculatorVwCtrl : UIViewController
 @property (weak, nonatomic) IBOutlet UILabel *calculatorScreenLbl;
+@property (weak, nonatomic) IBOutlet UIButton *acBtn;
 
 @end

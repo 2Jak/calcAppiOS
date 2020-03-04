@@ -28,6 +28,7 @@ static NSDictionary *frickApple;
 {
     UIButton *senderButton = (UIButton *)sender;
     int buttonCode = [frickApple[senderButton.titleLabel.text] intValue];
+    [self switchNumbersForOperation];
     if ([[self getCurrentNumber] isEqualToString:@"0"] && buttonCode != 10)
     {
         [self assignToCurrentNumber: @""];
@@ -38,8 +39,12 @@ static NSDictionary *frickApple;
     }
     else if (buttonCode == 10)
     {
-        [self assignToCurrentNumber: [NSString stringWithFormat:@"%@.",[self getCurrentNumber]]];
+        if ([[self getCurrentNumber] containsString:@"."])
+            return;
+        else
+            [self assignToCurrentNumber: [NSString stringWithFormat:@"%@.",[self getCurrentNumber]]];
     }
+    [self setACTitle:buttonCode];
     [self updateVisuals];
 }
 -(IBAction)onTransformGroupTouch:(id)sender
@@ -56,14 +61,17 @@ static NSDictionary *frickApple;
         case 12:
             currentNumberDoubleValue = 0.0;
             [self assignToCurrentNumber: [self removeUnnecessaryZeroes: currentNumberDoubleValue]];
+            self.action = ' ';
             break;
         case 13:
             currentNumberDoubleValue /= 100.0;
             [self assignToCurrentNumber:[self removeUnnecessaryZeroes: currentNumberDoubleValue]];
+            self.action = ' ';
             break;
         default:
             break;
     }
+    [self setACTitle:buttonCode];
     [self updateVisuals];
 }
 -(IBAction)onMathOperationsGroupTouch:(id)sender
@@ -73,7 +81,7 @@ static NSDictionary *frickApple;
     double a = [self.numberA doubleValue];
     double b = [self.numberB doubleValue];
     double result = 0.0;
-    if ([self.numberB isEqualToString:@""])
+    if ([self.numberB  isEqualToString: @""])
     {
         if (buttonCode != 18)
         {
@@ -96,7 +104,9 @@ static NSDictionary *frickApple;
             [self executeOperation:self.action onValue:&a andValue:&b into:&result];
             [self switchNumbers];
             [self assignToCurrentNumber: [self removeUnnecessaryZeroes: result]];
+            self.action = [senderButton.titleLabel.text characterAtIndex:0];
         }
+        [self setACTitle:buttonCode];
         [self updateVisuals];
     }
 }
@@ -110,15 +120,21 @@ static NSDictionary *frickApple;
     NSString *preEditedDoubleString = [NSString stringWithFormat:@"%lf", number];
     int indexOfDecimalPoint = 0;
     int indexOfLastNonZeroNumber = 0;
-    int lastIndex = (int)[preEditedDoubleString length] - 1;
+    int countBeforeZero = 0;
     for (int i = 0; i < [preEditedDoubleString length]; i++)
         if ([preEditedDoubleString characterAtIndex:i] == '.')
             indexOfDecimalPoint = i;
     for (int i = indexOfDecimalPoint; i < [preEditedDoubleString length]; i++)
         if ([preEditedDoubleString characterAtIndex:i] != '0')
             indexOfLastNonZeroNumber = i;
-    int zerosLength = lastIndex - indexOfLastNonZeroNumber;
-    return [preEditedDoubleString stringByReplacingCharactersInRange:NSMakeRange(indexOfLastNonZeroNumber, zerosLength) withString:@""];
+    for (int i = indexOfDecimalPoint; i < indexOfLastNonZeroNumber; i++)
+        countBeforeZero++;
+    if (countBeforeZero > 0)
+        return [NSString stringWithFormat:[NSString stringWithFormat:@"%@%@%@",@"%.", [NSString stringWithFormat:@"%d",countBeforeZero],@"lf"], number];
+    else if (countBeforeZero == 0)
+        return [NSString stringWithFormat:@"%d", (int)number];
+    else
+        return @"Error";
 }
 -(void)executeOperation: (char)action onValue: (double *)a andValue: (double *)b into:(double *)result
 {
@@ -148,6 +164,21 @@ static NSDictionary *frickApple;
     });
 
 }
+-(void)setACTitle: (int)buttonCode
+{
+    if (buttonCode == 12)
+    {
+        [self.acBtn setTitle:@"AC" forState:UIControlStateNormal];
+        [self.acBtn setTitle:@"AC" forState:UIControlStateFocused];
+        [self.acBtn setTitle:@"AC" forState:UIControlStateSelected];
+    }
+    else
+    {
+        [self.acBtn setTitle:@"C" forState:UIControlStateNormal];
+        [self.acBtn setTitle:@"C" forState:UIControlStateFocused];
+        [self.acBtn setTitle:@"C" forState:UIControlStateSelected];
+    }
+}
 -(void)assignToCurrentNumber: (NSString *)value
 {
     if (self.currentNumber == 'a')
@@ -162,6 +193,12 @@ static NSDictionary *frickApple;
     else if (self.currentNumber == 'b')
         return self.numberB;
     return nil;
+}
+-(void)switchNumbersForOperation
+{
+    NSString *actions = @"/x-+";
+    if (self.currentNumber == 'a' && [actions containsString:[NSString stringWithFormat:@"%c",self.action]])
+        [self switchNumbers];
 }
 -(void)switchNumbers
 {
@@ -192,6 +229,7 @@ static NSDictionary *frickApple;
                        @".":@10,
                        @"+/-":@11,
                        @"AC":@12,
+                       @"C":@12,
                        @"%":@13,
                        @"+":@14,
                        @"-":@15,
