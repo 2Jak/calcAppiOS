@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		894AED77241FB7D300A00670 /* JFTCalculator.m in Sources */ = {isa = PBXBuildFile; fileRef = 894AED76241FB7D300A00670 /* JFTCalculator.m */; };
+		894AED7A241FB8BC00A00670 /* JFTEquation.m in Sources */ = {isa = PBXBuildFile; fileRef = 894AED79241FB8BC00A00670 /* JFTEquation.m */; };
 		89A412982407A5E700277581 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 89A412972407A5E700277581 /* main.m */; };
 		89A4129B2407A5E700277581 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 89A4129A2407A5E700277581 /* AppDelegate.m */; };
 		89A412A12407A5E700277581 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 89A4129F2407A5E700277581 /* Main.storyboard */; };
@@ -16,6 +18,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		894AED75241FB7D300A00670 /* JFTCalculator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JFTCalculator.h; sourceTree = "<group>"; };
+		894AED76241FB7D300A00670 /* JFTCalculator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JFTCalculator.m; sourceTree = "<group>"; };
+		894AED78241FB8BC00A00670 /* JFTEquation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JFTEquation.h; sourceTree = "<group>"; };
+		894AED79241FB8BC00A00670 /* JFTEquation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JFTEquation.m; sourceTree = "<group>"; };
 		89A412932407A5E700277581 /* CalculatorProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CalculatorProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		89A412972407A5E700277581 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		89A412992407A5E700277581 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -75,6 +81,10 @@
 			isa = PBXGroup;
 			children = (
 				89A412972407A5E700277581 /* main.m */,
+				894AED78241FB8BC00A00670 /* JFTEquation.h */,
+				894AED79241FB8BC00A00670 /* JFTEquation.m */,
+				894AED75241FB7D300A00670 /* JFTCalculator.h */,
+				894AED76241FB7D300A00670 /* JFTCalculator.m */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -118,6 +128,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -149,6 +160,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				894AED77241FB7D300A00670 /* JFTCalculator.m in Sources */,
+				894AED7A241FB8BC00A00670 /* JFTEquation.m in Sources */,
 				89A4129B2407A5E700277581 /* AppDelegate.m in Sources */,
 				89A412982407A5E700277581 /* main.m in Sources */,
 				89A412AF2407AC7D00277581 /* JFTCalculatorVwCtrl.m in Sources */,
@@ -300,6 +313,7 @@
 				89A412AC2407A5E700277581 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
